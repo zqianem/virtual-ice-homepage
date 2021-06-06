@@ -1,0 +1,190 @@
+/* Common Elements */
+* {
+    box-sizing: border-box;
+}
+a, a:visited {
+    color: white;
+}
+.side-by-side { /* Used on globe & list and footer info */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}/* Necessary b/c gray-colored bullets */
+
+/* Top-Level Structures */
+body {
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    font-family: 'Exo 2', sans-serif;
+    color: white;
+}
+.wrapper { /* Forces scroll within {.wrapper} as oppose to {body}, ensuring background fills screen */
+    background-color: #010101;
+    height: 100%;
+    overflow: auto;
+}
+.wrapper-simple { /* Forces scroll within {.wrapper} as oppose to {body}, ensuring background fills screen */
+    background-color: white;
+    height: 100%;
+    overflow: auto;
+}
+.content { /* Manages element sizing vertically */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 50%;
+}
+
+/* Components and their Children */
+
+/* Top Navigation Bar */
+.top-nav {
+    position: sticky;
+    top: 0px;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 15; /* Allows nav to be display over splash video */
+
+    padding: 0px 1rem;
+    min-height: 3rem;
+
+    background-color: rgba(0,0,0,0.85);
+    border-bottom: 1px solid hsla(0, 0%, 100%, .2);
+
+}
+    .right { /* Right-side nav buttons holder */
+        display: flex;
+        align-items: center;
+        margin: 12px;
+    }
+    .top-nav a { /* Links within nav bar */
+        color: rgba(255,255,255,.7);
+        margin: 0px 0.75rem;
+        text-decoration: none;
+        font-size: 125%;
+    }
+    .top-nav a:hover {
+        color: rgba(255,255,255,1);
+    }
+    .nav-icon-button {
+        display: inline-block;
+        height: 35px;
+    }
+    .nav-icon-button img {
+        height: 100%;
+    }
+    /* Large screens */
+    @media all and (min-width: 800px) {
+        .page-header::after { /* Full title */
+            content: " | Virtual Reality Tours";
+        }
+    }
+    /* Medium screens */
+    @media all and (max-width: 800px) {
+        .top-nav { /* Center elements by evenly distributing empty space around them */
+        justify-content: space-around;
+        }
+        .page-header::after { /* Shortened title */
+            content: " | VR Tours";
+        }
+    }
+    /* Small screens */
+    @media all and (max-width: 500px) {
+        .top-nav { /* On small screens, stack nav items */
+            flex-direction: column;
+        }
+    }
+
+/* Banner video */
+.video-banner {
+    flex-grow: 1;
+    /* background: rgba(255,255,255,.2); */
+    text-align: center;
+    height: 200px;
+    overflow: hidden;
+}
+    .video-banner iframe {
+        position: relative;
+        top: -225px;
+        /* min-height: 325px; */
+        /* height: 800px; */
+    }
+    /* Small screens */
+    @media all and (max-width: 500px) {
+        .video-banner {
+            min-height: 250px;
+        }
+        .video-banner iframe {
+            width: 100%;
+            min-height: 250px;
+        }
+    }
+
+/* Globe and Tour list */
+.tours {
+    flex-grow: 4; /* Child property - tour globe and list take max height */
+    align-items: center; /* Parent property - globe and list are centered vertically */
+    padding: 0em 2em 1em 2em;
+}
+    .earth {
+        margin: 2em;
+        margin-top: 5px;
+    }
+    .tour-list {
+        color: #666666; /* Makes list bullets gray */
+        margin: 2em;
+        border-left: 1px solid white;
+    }
+    .tour-list h2 {
+        color: white; /* Necessary b/c of gray-colored bullets */
+    }
+    .tour-list a, .tour-list a:visited {
+        color: white; /* Necessary b/c of gray-colored bullets */
+        text-decoration: underline;
+        text-decoration-color: rgba(255,255,255,.5);
+        /* font-weight: bold; */
+        font-size: 105%;
+    }
+    .tour-list a:hover, .tour-list a:visited:hover {
+        text-decoration-color: rgba(255,255,255,1);
+    }
+    .tour-list-simple {
+        color: #666666; /* Makes list bullets gray */
+    }
+    .tour-list-simple h2 {
+        color: black; /* Necessary b/c of gray-colored bullets */
+    }
+    .tour-list-simple a, .tour-list-simple a:visited {
+        color: #CE0F3D; /* Necessary b/c of gray-colored bullets */
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 115%;
+    }
+    /* Smaller screens */
+    @media only screen and (max-width: 600px) {
+        .earth { /* Hide Fluid Earth 1.0 on mobile */
+            display: none;
+        }
+    }
+
+/* Footer (extra information) */
+.footer {
+    padding: 1.5em;
+}
+    /* Large screens */
+    @media all and (min-width: 800px) {
+        .side-info { /* 2 divs adjacent when on dekstop */
+            flex-basis: 45%;
+            padding: 0px 2rem;
+        }
+    }
+    /* Smaller screens */
+    @media all and (max-width: 800px) {
+        .side-info { /* Reduce padding and allow elements to stack on mobile */
+            padding: 0px .5rem;
+        }
+    }
