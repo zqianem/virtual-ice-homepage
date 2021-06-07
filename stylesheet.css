@@ -133,6 +133,9 @@ body {
     .earth {
         margin: 2em;
         margin-top: 5px;
+        display: flex;
+        width: 475px;
+        height: 475px;
     }
     .tour-list {
         color: #666666; /* Makes list bullets gray */
