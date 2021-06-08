@@ -136,6 +136,17 @@ body {
         width: 475px;
         height: 475px;
     }
+    #pins {
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0; /* create separate stacking context for pins */
+    }
+    #pins a {
+      pointer-events: auto;
+      background-color: black;
+      position: absolute;
+      display: none;
+    }
     .tour-list {
         color: #666666; /* Makes list bullets gray */
         margin: 2em;

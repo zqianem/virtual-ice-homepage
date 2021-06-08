@@ -43,6 +43,40 @@
             <div class="tours side-by-side">
                 <earth-map class="earth">
                   <div id="interactionSurface"></div>
+                  <div id="pins">
+                    <a href="https://virtualice.byrd.osu.edu/huascaran/"
+                       lon="-77.6" lat="-9.1">
+                      Huascarán Tour
+                    </a>
+                    <a href="https://virtualice.byrd.osu.edu/kelleys_island/"
+                       lon="-82.68" lat="41.6">
+                      Kelleys Island Tour
+                    </a>
+                    <a href="https://virtualice.byrd.osu.edu/Kennicott/"
+                       lon="-142.92" lat="61.47">
+                      Kennicott Tour
+                    </a>
+                    <a href="https://virtualice.byrd.osu.edu/jakobshavnVR/"
+                       lon="-51.05" lat="69.23">
+                      Jakobshavn Tour
+                    </a>
+                    <a href="https://virtualice.byrd.osu.edu/DryValleys/"
+                       lon="166.68" lat="-77.83">
+                      McMurdo Dry Valleys Tour
+                    </a>
+                    <a href="https://virtualice.byrd.osu.edu/DryValleys/"
+                       lon="0.00" lat="-85.00">
+                      MOSAiC Expedition Tour
+                    </a>
+                    <a href="https://virtualice.byrd.osu.edu/DryValleys/"
+                       lon="-70.83" lat="-13.93">
+                      Quelccaya Tour
+                    </a>
+                    <a href="https://virtualice.byrd.osu.edu/DryValleys/"
+                       lon="0.00" lat="-90">
+                      South Pole Tour
+                    </a>
+                  </div>
                 </earth-map>
 
                 <ul class="tour-list">
@@ -169,6 +203,7 @@
   (async () => {
     let res = await fetch('./topology.json');
     earthMap.vectorData = await res.json();
+    positionPins();
   })();
 
   let interactionSurface = document.querySelector('#interactionSurface');
@@ -187,6 +222,7 @@
           let lat = earthMap.centerLatitude + PAN_FACTOR * e.dy / earthMap.zoom / screenRatio;
           earthMap.centerLongitude = modulo(lon, 360, -180);
           earthMap.centerLatitude = clamp(lat, -90, 90);
+          positionPins();
         },
       },
     })
@@ -197,6 +233,7 @@
         },
         move (e) {
           earthMap.zoom = clamp(baseScale * e.scale, MIN_ZOOM, MAX_ZOOM);
+          positionPins();
         },
       }
     });
@@ -205,7 +242,23 @@
     e.preventDefault();
     let z = earthMap.zoom - 0.25 * Math.sign(e.deltaY);
     earthMap.zoom = clamp(z, MIN_ZOOM, MAX_ZOOM);
+    positionPins();
   });
+
+  function positionPins() {
+    let pins = [...document.querySelectorAll('#pins a')];
+    for (const pin of pins) {
+      let lonLat = [pin.getAttribute('lon'), pin.getAttribute('lat')];
+      let point = earthMap.forwardProjectionFunction(lonLat);
+      if (point) {
+        pin.style.display = 'block';
+        pin.style.left = point[0];
+        pin.style.top = point[1];
+      } else {
+        pin.style.display = 'none';
+      }
+    }
+  }
 
   function clamp(x, min, max) {
     return x > max ? max : (x < min ? min : x);
