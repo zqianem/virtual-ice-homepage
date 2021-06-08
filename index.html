@@ -211,7 +211,7 @@
     return x > max ? max : (x < min ? min : x);
   }
 
-  function modulo(x, y) {
-    return ((x % y ) + y ) % y;
+  function modulo(x, y, offset=0) {
+    return (((x - offset % y ) + y ) % y) + offset;
   }
 </script>
