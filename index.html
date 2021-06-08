@@ -203,8 +203,8 @@
   (async () => {
     let res = await fetch('./topology.json');
     earthMap.vectorData = await res.json();
-    positionPins();
   })();
+  earthMap.syncWithAnimationHook = positionPins;
 
   let interactionSurface = document.querySelector('#interactionSurface');
   const screenRatio = interactionSurface.clientHeight / 1080;
@@ -222,7 +222,6 @@
           let lat = earthMap.centerLatitude + PAN_FACTOR * e.dy / earthMap.zoom / screenRatio;
           earthMap.centerLongitude = modulo(lon, 360, -180);
           earthMap.centerLatitude = clamp(lat, -90, 90);
-          positionPins();
         },
       },
     })
@@ -233,7 +232,6 @@
         },
         move (e) {
           earthMap.zoom = clamp(baseScale * e.scale, MIN_ZOOM, MAX_ZOOM);
-          positionPins();
         },
       }
     });
@@ -242,7 +240,6 @@
     e.preventDefault();
     let z = earthMap.zoom - 0.25 * Math.sign(e.deltaY);
     earthMap.zoom = clamp(z, MIN_ZOOM, MAX_ZOOM);
-    positionPins();
   });
 
   function positionPins() {
